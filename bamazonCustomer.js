@@ -1,4 +1,5 @@
 var mysql = require("mysql");
+var inquirer = require("inquirer");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -32,6 +33,68 @@ function afterConnection() {
 
     if (err) throw err;
     console.table(transformed);
-    connection.end();
+    idQuery();
   });
 }
+
+function idQuery() {
+  inquirer
+    .prompt({
+      name: "idQuery",
+      type: "number",
+      message: "Type the ID of the product you want to buy?"
+    })
+    .then(function(answer) {
+      connection.query(
+        "SELECT ? FROM bamazon_db.products ",
+        {
+          id: answer.idQuery
+        },
+        function(err) {
+          if (err) throw err;
+          // re-prompt the user for if they want to bid or post
+          purchaseAmount();
+        }
+      );
+      // based on their answer, either call the bid or the post functions
+    });
+}
+
+function purchaseAmount() {
+  inquirer
+    .prompt({
+      name: "purchaseAmount",
+      type: "number",
+      message: "How many would you like to buy?"
+    })
+    .then(function(answer) {
+      connection.query(
+        "SELECT ? FROM bamazon_db.products SUBTRACT ? FROM bamazon_db.products.stock ",
+        // put an update thing a ma bob into this
+        [{ id: answer.idQuery }, { stock: answer.purchaseAmount }]
+      );
+      // based on their answer, either call the bid or the post functions
+    });
+}
+
+// function buyById() {
+//   inquirer
+//     .prompt({
+//       name: "buyById",
+//       type: "rawlist",
+//       message: "?",
+//       choices: ["POST", "BID", "EXIT"]
+//     })
+//     .then(function(answer) {
+//       // based on their answer, either call the bid or the post functions
+//       if (answer.postOrBid === "POST") {
+//         postAuction();
+//       } else if (answer.postOrBid === "BID") {
+//         bidAuction();
+//       } else {
+//         connection.end();
+//       }
+//     });
+// }
+
+// function howMany() {}
