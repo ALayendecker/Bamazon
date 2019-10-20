@@ -4,11 +4,8 @@ var inquirer = require("inquirer");
 var stockCheck;
 var connection = mysql.createConnection({
   host: "localhost",
-
   port: 3306,
-
   user: "root",
-
   password: "VintheMistborn08!",
   database: "bamazon_db"
 });
@@ -64,7 +61,7 @@ function startBuy() {
           }
           stockCheck = res[0].stock_quantity;
           if (stockCheck < answer.stock_quantity) {
-            outOfStock();
+            stockChecking();
           } else {
             connection.query(
               "UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ? ",
@@ -73,7 +70,7 @@ function startBuy() {
                 if (err) {
                   console.log(err);
                 }
-                //I never would have thought of this thank you kala
+                //I never would have thought of this thank you Kala
                 transPrice(answer.id, answer.stock_quantity);
               }
             );
@@ -83,6 +80,7 @@ function startBuy() {
     });
 }
 
+//trying to make a reciept
 function transPrice(id, amount) {
   connection.query("SELECT price FROM products WHERE id = ? ", [id], function(
     err,
@@ -92,13 +90,19 @@ function transPrice(id, amount) {
       console.log(err);
     }
     console.log(
-      "Thank you for your purchase your total is " + res[0].price * amount
+      //reciept for amount of items and price?
+      "Thank you for your purchase. Your total is for " +
+        amount +
+        "X item ID:" +
+        id +
+        " is $" +
+        res[0].price * amount
     );
     buyAgain();
   });
 }
 
-function outOfStock() {
+function stockChecking() {
   inquirer
     .prompt({
       name: "NoStock",
