@@ -1,100 +1,208 @@
+//globals
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+var stockCheck;
 var connection = mysql.createConnection({
   host: "localhost",
 
-  // Your port; if not 3306
   port: 3306,
 
-  // Your username
   user: "root",
 
-  // Your password
   password: "VintheMistborn08!",
   database: "bamazon_db"
 });
 
+//connecting to the db
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
-  afterConnection();
+  initConnection();
 });
 
-function afterConnection() {
+//showing the table for the items for sale
+function initConnection() {
   connection.query("SELECT id, product_name, price FROM products", function(
     err,
     res
   ) {
+    //trying to get the console.table to not show index
     const transformed = res.map(function(obj) {
       delete obj.index;
       return obj;
     });
-
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+    }
+    // console.table(res);
     console.table(transformed);
-    idQuery();
+    startBuy();
   });
 }
 
-function idQuery() {
+// starting the product purchasing
+function startBuy() {
   inquirer
-    .prompt({
-      name: "idQuery",
-      type: "number",
-      message: "Type the ID of the product you want to buy?"
-    })
+    .prompt([
+      {
+        type: "number",
+        name: "id",
+        message: "Type the ID of the product you want to buy?"
+      },
+      {
+        type: "number",
+        name: "stock_quantity",
+        message: "Type the amount you would like to buy?"
+      }
+    ])
     .then(function(answer) {
       connection.query(
-        "SELECT ? FROM bamazon_db.products ",
-        {
-          id: answer.idQuery
-        },
-        function(err) {
-          if (err) throw err;
-          // re-prompt the user for if they want to bid or post
-          purchaseAmount();
+        "SELECT stock_quantity FROM products WHERE id = ? ",
+        [answer.id],
+        function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          stockCheck = res[0].stock_quantity;
+          if (stockCheck < answer.stock_quantity) {
+            outOfStock();
+          } else {
+            connection.query(
+              "UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ? ",
+              [answer.stock_quantity, answer.id],
+              function(err) {
+                if (err) {
+                  console.log(err);
+                }
+                //I never would have thought of this thank you kala
+                transPrice(answer.id, answer.stock_quantity);
+              }
+            );
+          }
         }
       );
-      // based on their answer, either call the bid or the post functions
     });
 }
 
-function purchaseAmount() {
+function transPrice(id, amount) {
+  connection.query("SELECT price FROM products WHERE id = ? ", [id], function(
+    err,
+    res
+  ) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(
+      "Thank you for your purchase your total is " + res[0].price * amount
+    );
+    buyAgain();
+  });
+}
+
+function outOfStock() {
   inquirer
     .prompt({
-      name: "purchaseAmount",
-      type: "number",
-      message: "How many would you like to buy?"
+      name: "NoStock",
+      type: "list",
+      message: "Sorry we do not have enough of that item in stock.",
+      choices: ["Keep Shopping?", "Leave"]
     })
     .then(function(answer) {
-      connection.query(
-        "SELECT ? FROM bamazon_db.products SUBTRACT ? FROM bamazon_db.products.stock ",
-        // put an update thing a ma bob into this
-        [{ id: answer.idQuery }, { stock: answer.purchaseAmount }]
-      );
-      // based on their answer, either call the bid or the post functions
+      if (answer.NoStock === "Keep Shopping?") {
+        startBuy();
+      }
+      if (answer.NoStock === "Leave") {
+        connection.end();
+      }
     });
 }
 
-// function buyById() {
+function buyAgain() {
+  inquirer
+    .prompt({
+      name: "buyAgain",
+      type: "list",
+      message: "Would you like to purchase anything else?",
+      choices: ["Keep Shopping", "Leave"]
+    })
+    .then(function(answer) {
+      if (answer.buyAgain === "Keep Shopping") {
+        startBuy();
+      }
+      if (answer.buyAgain === "Leave") {
+        connection.end();
+      }
+    });
+}
+// function initConnection() {
+//   connection.query("SELECT id, product_name, price FROM products", function(
+//     err,
+//     res
+//   ) {
+//     const transformed = res.map(function(obj) {
+//       delete obj.index;
+//       return obj;
+//     });
+
+//     if (err) throw err;
+//     console.table(transformed);
+//     buyStart();
+//   });
+// }
+
+// function buyStart() {
 //   inquirer
-//     .prompt({
-//       name: "buyById",
-//       type: "rawlist",
-//       message: "?",
-//       choices: ["POST", "BID", "EXIT"]
-//     })
+//     .prompt([
+//       {
+//         name: "id",
+//         type: "number",
+//         message: "Type the ID of the product you want to buy?"
+//       },
+//       {
+//         name: "purchaseAmount",
+//         type: "number",
+//         message: "How many would you like to buy?"
+//       }
+//     ])
 //     .then(function(answer) {
-//       // based on their answer, either call the bid or the post functions
-//       if (answer.postOrBid === "POST") {
-//         postAuction();
-//       } else if (answer.postOrBid === "BID") {
-//         bidAuction();
-//       } else {
+//       connection.query(
+//         "UPDATE products SET stock_quantity = stock_quantity MINUS ? WHERE id = ? ",
+//         [answer.id, answer.purchaseAmount],
+//         function(res) {
+// stockCheck = res[0].stock_quantity;
+// itemPrice = res[0].price;
+// if (answer.purchaseAmount > stockCheck) {
+// again();
+
+// }})
+
+// else {
+//   connection.query(
+//     ("SELECT price FROM products WHERE id = ?",
+//   [answer.id],
+//   answer.purchaseAmount < stockCheck,
+//   console.log("Thank you for your purchase your total is."),
+//   console.log(answer.purchaseAmount * itemPrice),
+
+//     ))}
+// })
+
+// function again() {
+//   inquirer
+//     .prompt([
+//       {
+//         name: "again",
+//         type: "list",
+//         message: "Sorry we do not have enough of that item in stock.",
+//         choices: ["Keep shopping?", "Leave"]
+//       }
+//     ])
+//     .then(function(answer) {
+//       if (answer.again === "Leave") {
+//         console.log("Come again soon!");
 //         connection.end();
+//       }
+//       if (answer.again === "Keep shopping?") {
+//         initConnection();
 //       }
 //     });
 // }
-
-// function howMany() {}
