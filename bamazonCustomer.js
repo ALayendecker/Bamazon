@@ -23,15 +23,19 @@ function initConnection() {
     res
   ) {
     //trying to get the console.table to not show index
-    const transformed = res.map(function(obj) {
-      delete obj.index;
-      return obj;
-    });
+    // const transformed = res.map(function(obj) {
+    //   delete obj.index;
+    //   return obj;
+    // });
     if (err) {
       console.log(err);
     }
-    // console.table(res);
-    console.table(transformed);
+    for (let i = 0; i < res.length; i++) {
+      res[i].price = res[i].price.toFixed(2);
+    }
+
+    console.table(res);
+    // console.table(transformed);
     startBuy();
   });
 }
@@ -96,7 +100,7 @@ function transPrice(id, amount) {
         "X item ID:" +
         id +
         " is $" +
-        res[0].price * amount
+        (res[0].price * amount).toFixed(2)
     );
     buyAgain();
   });

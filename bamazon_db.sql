@@ -13,6 +13,7 @@ CREATE TABLE products
   department_name VARCHAR
   (45) NULL,
     price
+  DECIMAL
   (10,2) NOT NULL,
     stock_quantity INT
   NULL,
@@ -23,17 +24,17 @@ CREATE TABLE products
   INSERT INTO products
     (product_name, department_name, price, stock_quantity)
   VALUES
-    ("Rocks", "Landscape", 2.50, 100),
-    ("Chocolate", "Food", 3.10, 120),
-    ("Ipad", "Electronics", 3.10, 120),
-    ("Television", "Electronics", 3.10, 120),
-    ("Scarves", "Clothing", 3.10, 120),
-    ("Socks", "Clothing", 3.10, 120),
-    ("Jean Jackets", "Clothing", 3.10, 120),
-    ("Chairs", "Furniture", 3.10, 120),
-    ("Water Bottle", "Food", 3.10, 120),
-    ("Coffee", "Food", 3.10, 120),
-    ("Altoids", "Food", 3.10, 120);
+    ("Rocks", "Landscape", 5.57, 100),
+    ("Chocolate", "Food", 6.15, 120),
+    ("Ipad", "Electronics", 320.99, 75),
+    ("Television", "Electronics", 895.10, 120),
+    ("Scarves", "Clothing", 19.55, 120),
+    ("Socks", "Clothing", 8.95, 120),
+    ("Jean Jackets", "Clothing", 75.15, 120),
+    ("Chairs", "Furniture", 125.77, 120),
+    ("Water Bottle", "Food", 1.25, 120),
+    ("Coffee", "Food", 12.00, 120),
+    ("Altoids", "Food", 1.75, 120);
 
 
 -- ### Alternative way to insert more than one row
