@@ -25,16 +25,16 @@ CREATE TABLE products
     (product_name, department_name, price, stock_quantity)
   VALUES
     ("Rocks", "Landscape", 5.57, 100),
+    ("Water Bottle", "Food", 1.25, 120),
+    ("Coffee", "Food", 12.00, 120),
+    ("Altoids", "Food", 1.75, 120),
     ("Chocolate", "Food", 6.15, 120),
-    ("Ipad", "Electronics", 320.99, 75),
-    ("Television", "Electronics", 895.10, 120),
     ("Scarves", "Clothing", 19.55, 120),
     ("Socks", "Clothing", 8.95, 120),
     ("Jean Jackets", "Clothing", 75.15, 120),
     ("Chairs", "Furniture", 125.77, 120),
-    ("Water Bottle", "Food", 1.25, 120),
-    ("Coffee", "Food", 12.00, 120),
-    ("Altoids", "Food", 1.75, 120);
+    ("Ipad", "Electronics", 320.99, 75),
+    ("Television", "Electronics", 895.10, 120);
 
 
 -- ### Alternative way to insert more than one row
