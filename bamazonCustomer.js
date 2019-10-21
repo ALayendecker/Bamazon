@@ -1,18 +1,11 @@
 //globals
 require("dotenv").config();
 var keys = require("./keys.js");
-var mysqlkeys = new Mysqlkeys(keys.mysqlkeys);
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var stockCheck;
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  mysqlkeys,
-  // password: "VintheMistborn08!",
-  database: "bamazon_db"
-});
+// console.log(keys.password);
+var connection = mysql.createConnection(keys);
 
 //connecting to the db
 connection.connect(function(err) {
