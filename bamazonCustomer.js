@@ -4,6 +4,7 @@ var keys = require("./keys.js");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var stockCheck;
+// var keys = key.password;
 // console.log(keys.password);
 var connection = mysql.createConnection(keys);
 
@@ -138,76 +139,3 @@ function buyAgain() {
       }
     });
 }
-// function initConnection() {
-//   connection.query("SELECT id, product_name, price FROM products", function(
-//     err,
-//     res
-//   ) {
-//     const transformed = res.map(function(obj) {
-//       delete obj.index;
-//       return obj;
-//     });
-
-//     if (err) throw err;
-//     console.table(transformed);
-//     buyStart();
-//   });
-// }
-
-// function buyStart() {
-//   inquirer
-//     .prompt([
-//       {
-//         name: "id",
-//         type: "number",
-//         message: "Type the ID of the product you want to buy?"
-//       },
-//       {
-//         name: "purchaseAmount",
-//         type: "number",
-//         message: "How many would you like to buy?"
-//       }
-//     ])
-//     .then(function(answer) {
-//       connection.query(
-//         "UPDATE products SET stock_quantity = stock_quantity MINUS ? WHERE id = ? ",
-//         [answer.id, answer.purchaseAmount],
-//         function(res) {
-// stockCheck = res[0].stock_quantity;
-// itemPrice = res[0].price;
-// if (answer.purchaseAmount > stockCheck) {
-// again();
-
-// }})
-
-// else {
-//   connection.query(
-//     ("SELECT price FROM products WHERE id = ?",
-//   [answer.id],
-//   answer.purchaseAmount < stockCheck,
-//   console.log("Thank you for your purchase your total is."),
-//   console.log(answer.purchaseAmount * itemPrice),
-
-//     ))}
-// })
-
-// function again() {
-//   inquirer
-//     .prompt([
-//       {
-//         name: "again",
-//         type: "list",
-//         message: "Sorry we do not have enough of that item in stock.",
-//         choices: ["Keep shopping?", "Leave"]
-//       }
-//     ])
-//     .then(function(answer) {
-//       if (answer.again === "Leave") {
-//         console.log("Come again soon!");
-//         connection.end();
-//       }
-//       if (answer.again === "Keep shopping?") {
-//         initConnection();
-//       }
-//     });
-// }

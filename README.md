@@ -65,6 +65,7 @@ This app will let a user query multiple sets of data from different APIs.
 - [Node](https://nodejs.org/en/)
 - [Node Package - DotEnv](https://www.npmjs.com/package/dotenv)
 - [Node Package - mysql](https://www.npmjs.com/package/mysql)
+- [Node Package - Inquirer](https://www.npmjs.com/package/inquirer)
 - [othneildrew - Best README Template](https://github.com/othneildrew/Best-README-Template)
 
 <!-- Organization -->
@@ -117,18 +118,14 @@ SPOTIFY_SECRET= (Secret here)
 
 ## Usage
 
-To use liri with node run `node liri.js <your command> <search term>`
-
-You can find some example images in the [images folder](https://github.com/Alayendecker/LIRI-Bot/tree/master/assets/images) `assets>images`
+To use Bamazon Customer with node run `node bamazonCustomer.js`
 
 ### Commands
 
-| App Command         | Short Description                                 |
-| ------------------- | ------------------------------------------------- |
-| `concert-this`      | Searches Bands in Town API for an artist's events |
-| `spotify-this-song` | Searches Spotify for info about a band or artist  |
-| `movie-this`        | Searches for info about the movie you entered     |
-| `do-what-it-says`   | Runs the cmd text and search term in random.txt   |
+| App Command  | Short Description                                       |
+| ------------ | ------------------------------------------------------- |
+| `Numbers`    | Use Numbers as inputs for item Id's and product amounts |
+| `Arrow Keys` | Use Arrow Keys to navigate inquirer                     |
 
 #### `concert-this (artistName)`
 
@@ -140,9 +137,13 @@ This will search the Bands in Town Artist Events API for an artist and render th
 
 <img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/concert-this.PNG"/>
 
-#### `spotify-this-song (songName)`
+#### `BamazonCustomer`
 
-This will show the following information about the song in your terminal/bash window
+Running BamazonCustomer.js will display a list of items in a table complete with ID product name and prices.
+
+The app will use Inquirer to prompt the user to select an item ID of the item they would like to purchase. The user will then select the amount of the item they would like to purchase.
+
+If there is an adequate quantity in stock the purchase will process and deduct the stock number from the mysql Database where the item information is housed. It will then return a Line Item Transaction console log that will display how many of an item was purchased and the total price.+
 
 - Artist(s):
 - The song's name:
@@ -150,30 +151,6 @@ This will show the following information about the song in your terminal/bash wi
 - The album that the song is from:
 
 <img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/Spotify-this-song.PNG"/>
-
-#### `movie-this (movieName)`
-
-This will output the following information to your terminal/bash window:
-
-- Title of the movie.
-- Year the movie came out.
-- IMDB Rating of the movie.
-- Rotten Tomatoes Rating of the movie.
-- Country where the movie was produced.
-- Language of the movie.
-- Plot of the movie.
-- Actors in the movie.
-
-<img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/movie-this.PNG"/>
-
-#### `do-what-it-says`
-
-LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-
-- It should run `spotify-this-song` for `"I Want it That Way,"` as follows the random text in `random.txt` file.
-- Edit the text in random.txt to test out the feature for `movie-this`, `spotify-this-song` and `concert-this`.
-
-<img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/do-what-it-says.PNG"/>
 
 <!-- CONTACT -->
 
