@@ -94,11 +94,11 @@ To use Bamazon Mangager with node run `node bamazonManager.js` in a node compati
 
 ### Commands
 
-| App Command  | Short Description                                     |
-| ------------ | ----------------------------------------------------- |
-| `Keyboard`   | Use keyboard as input for item Id's names and product | ---------------- quantities product amounts. ------------------------- |
-| `Arrow Keys` | Use Arrow Keys to navigate inquirer prompts.          |
-| `CTRL + C`   | Will allow you to close out of a node process. Use if | -----------------stuck.----------------------------------------------- |
+| App Command  | Short Description                                                                 |
+| ------------ | --------------------------------------------------------------------------------- |
+| `Keyboard`   | Use keyboard as input for item Id's names and product quantities product amounts. |
+| `Arrow Keys` | Use Arrow Keys to navigate inquirer prompts.                                      |
+| `CTRL + C`   | Will allow you to close out of a node process. Use if stuck.                      |
 
 #### `BamazonCustomer`
 
