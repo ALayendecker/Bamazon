@@ -1,26 +1,5 @@
 # Bamazon
 
-<!--
-*** Thanks for checking out this README Template. If you have a suggestion that would
-*** make this better, please fork the repo and create a pull request or simply open
-*** an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
-***
-***
-***
-*** To avoid retyping too much info. Do a search and replace for the following:
-*** github_username, repo, twitter_handle, email
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -52,13 +31,7 @@
 
 ## About The Project
 
-This app will let a user query multiple sets of data from different APIs.
-
-- This app could be used as one stop shop for specific searches regarding the most recent upcoming concert for an artist. See - [Band In Town](#concert-this)
-
-- A spotify search based off song name. See - [Spotify](#spotify-this-song)
-
-* A movie search based off movie title. See - [OMDB](#movie-this)
+This app is meant to simulate a simplified purchasing window and a product management window using node with user inputs being guided by Inquirer prompts.
 
 ### Built With
 
@@ -72,19 +45,16 @@ This app will let a user query multiple sets of data from different APIs.
 
 ## Organization
 
-Requires are located at the top of the liri.js file along with an instanciated spotify and user input global variable.
+Requires are located at the top of the bamazonCustomer.js and bamazonManager.js files along with global variables.
 
-All functions are called through a switch case wrapped into a function for logging. Each of the four commands used in this app have their own functions.
+In bamazonCustomer.js there are four primary functions that do the following. Display a console.table of products that displays item id's, names, and price. Users go through a set of inquirer prompts to attempt to purchase items based on their id's and request to buy a specified quantity. At which time the app will check the database to see if there is enough stock available. If a purchase completes the user has the oportunity to keep shopping or leave. If a purchase fails the user also has the option to keep shopping or leave.
 
-`concert-this`
-
-`spotify-this-song`
-
-`movie-this`
-
-`do-what-it-says`
-
-The functions themselves are created in the bottom half of the liri.js file.
+In bamazonManager.js functions are called through a switch case wrapped into a function for node logging. Users can do the following --
+`View Products for Sale`
+`View Low Inventory`
+`Add to Inventory`
+`Add New Product`
+These are managed by starting the program and using the up/down arrow keys to navigate the inquirer prompts and using user input when requested by the prompts.
 
 <!-- GETTING STARTED -->
 
@@ -106,70 +76,82 @@ git clone https:://github.com/Alayendecker/Bamazon.git
 npm install
 ```
 
-3. Create an `.env` to hide your own API keys you will need to run this app.
+3. Create an `.env` to hide your own mysql-database-root-password/mysql-database-config you will need to run this app.
 
 ```sh
-# Spotify API keys
-SPOTIFY_ID= (ID here)
-SPOTIFY_SECRET= (Secret here)
+# MysqlKeys
+
+MYSQLKEYS=YourPassHere
 ```
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-To use Bamazon Customer with node run `node bamazonCustomer.js`
+To use Bamazon Customer with node run `node bamazonCustomer.js` in a node compatible terminal.
+
+To use Bamazon Mangager with node run `node bamazonManager.js` in a node compatible terminal.
 
 ### Commands
 
-| App Command  | Short Description                                       |
-| ------------ | ------------------------------------------------------- |
-| `Numbers`    | Use Numbers as inputs for item Id's and product amounts |
-| `Arrow Keys` | Use Arrow Keys to navigate inquirer                     |
-
-#### `concert-this (artistName)`
-
-This will search the Bands in Town Artist Events API for an artist and render the following information about each event to the terminal:
-
-- Name of the venue
-- Venue location
-- Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-<img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/concert-this.PNG"/>
+| App Command  | Short Description                                     |
+| ------------ | ----------------------------------------------------- |
+| `Keyboard`   | Use keyboard as input for item Id's names and product | ---------------- quantities product amounts. ------------------------- |
+| `Arrow Keys` | Use Arrow Keys to navigate inquirer prompts.          |
+| `CTRL + C`   | Will allow you to close out of a node process. Use if | -----------------stuck.----------------------------------------------- |
 
 #### `BamazonCustomer`
 
-Running BamazonCustomer.js will display a list of items in a table complete with ID product name and prices.
+Running BamazonCustomer.js will display a list of items in a table complete with ID, product name, and prices.
 
 The app will use Inquirer to prompt the user to select an item ID of the item they would like to purchase. The user will then select the amount of the item they would like to purchase.
 
-If there is an adequate quantity in stock the purchase will process and deduct the stock number from the mysql Database where the item information is housed. It will then return a Line Item Transaction console log that will display how many of an item was purchased and the total price.+
+If there is an adequate quantity in stock the purchase will process and deduct the stock number from the mysql Database where the item information is housed. It will then return a Line Item Transaction console log that will display how many of an item was purchased and the total price.
 
-- Artist(s):
-- The song's name:
-- A preview link of the song from Spotify:
-- The album that the song is from:
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Customer-Load.PNG"/>
 
-<img src="https://github.com/ALayendecker/LIRI-Bot/blob/master/assets/images/Spotify-this-song.PNG"/>
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Customer-Complete-Trans.PNG"/>
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Failed-Trans.PNG"/>
+
+#### `BamazonManager`
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Manager-load.PNG"/>
+
+Running BamazonManager.js and selecting `View Products for Sale` will display a list of items in a table complete with ID, product name, department name, prices, and stock quantities.
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Manager-Prod-View.PNG"/>
+
+Selecting `View Low Inventory` will display all stocked items that have less than 5 in stock.
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/Low-Inv.PNG"/>
+
+Selecting `Add to Inventory` will allow a user to resupply whatever ID number with whatever amount number you type into the prompt.
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/manager-restock.PNG"/>
+
+Selecting `Add New Product` will allow a user to provide a product name, department name, prices, and stock quantity. Then display an updated table with information pulled form the database.
+
+<img src="https://github.com/ALayendecker/Bamazon/blob/master/assets/images/New-Item.PNG"/>
+
+If there is an adequate quantity in stock the purchase will process and deduct the stock number from the mysql Database where the item information is housed. It will then return a Line Item Transaction console log that will display how many of an item was purchased and the total price.
 
 <!-- CONTACT -->
 
 ## Contact
 
-Role Lead Developer for LIRI Bot ALayendecker
+Role Lead Developer for Bamazon ALayendecker
 
-Project Link: [https://github.com/Alayendecker/LIRI-Bot](https://github.com/Alayendecker/LIRI-Bot)
-
-Special Thanks to - [jtsai972 - For assistance with README's Thanks!](https://github.com/jtsai972)
+Project Link: [https://github.com/Alayendecker/Bamazon](https://github.com/Alayendecker/Bamazon)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/Alayendecker/LIRI-Bot.svg?style=flat-square
-[contributors-url]: https://github.com/Alayendecker/LIRI-Bot/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Alayendecker/LIRI-Bot.svg?style=flat-square
-[forks-url]: https://github.com/Alayendecker/LIRI-Bot/network/members
-[stars-shield]: https://img.shields.io/github/stars/Alayendecker/LIRI-Bot.svg?style=flat-square
-[stars-url]: https://github.com/Alayendecker/LIRI-Bot/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Alayendecker/LIRI-Bot.svg?style=flat-square
-[issues-url]: https://github.com/Alayendecker/LIRI-Bot/issues
+[contributors-shield]: https://img.shields.io/github/contributors/Alayendecker/Bamazon.svg?style=flat-square
+[contributors-url]: https://github.com/Alayendecker/Bamazon/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Alayendecker/Bamazon.svg?style=flat-square
+[forks-url]: https://github.com/Alayendecker/Bamazon/network/members
+[stars-shield]: https://img.shields.io/github/stars/Alayendecker/Bamazon.svg?style=flat-square
+[stars-url]: https://github.com/Alayendecker/Bamazon/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Alayendecker/Bamazon.svg?style=flat-square
+[issues-url]: https://github.com/Alayendecker/Bamazon/issues
