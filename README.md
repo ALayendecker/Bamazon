@@ -24,6 +24,7 @@
 - [Getting Started](#getting-started)
   - [Installation](#installation)
 - [Usage](#usage)
+- [Commands](#commands)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
@@ -54,13 +55,14 @@ In bamazonManager.js functions are called through a switch case wrapped into a f
 `View Low Inventory`
 `Add to Inventory`
 `Add New Product`
+
 These are managed by starting the program and using the up/down arrow keys to navigate the inquirer prompts and using user input when requested by the prompts.
 
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
+Follow the instructions below then navigate to [Usage](#usage) & [Commands](#commands).
 
 ### Installation
 
